@@ -9,19 +9,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #007bff; /* Button and link color */
+            --primary-color: #007bff; /* ボタンやリンクの色 */
             --primary-hover-color: #0056b3;
             --text-color: #333;
             --text-light-color: #555;
-            --background-color: #f4f7f9; /* Light gray background */
+            --background-color: #f4f7f9; /* 明るいグレーの背景 */
             --container-background: #ffffff;
             --border-color: #e0e0e0;
-            --important-text-color: #e74c3c; /* Red for important messages */
+            --important-text-color: #e74c3c; /* 重要なメッセージ用の赤色 */
+            --footer-text-color: #777;
             --shadow-color: rgba(0, 0, 0, 0.08);
         }
 
         body {
-            font-family: 'Roboto', 'Noto Sans JP', sans-serif; /* English font first, then Japanese */
+            font-family: 'Roboto', 'Noto Sans JP', sans-serif; /* 英語フォントを先に、次に日本語フォント */
             line-height: 1.7;
             margin: 0;
             padding: 20px;
@@ -30,7 +31,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            min-height: 100vh; /* ページ全体の高さをビューポートの高さ以上にする */
             box-sizing: border-box;
         }
 
@@ -75,6 +76,7 @@
             box-shadow: 0 4px 15px var(--shadow-color);
             max-width: 700px;
             width: 100%;
+            margin-bottom: auto; /* フッターを一番下に押しやるために追加 */
         }
 
         .content-section p {
@@ -85,16 +87,16 @@
         .content-section p:first-child {
             margin-top: 0;
         }
-         .content-section p:last-of-type {
+         .content-section p:last-of-type { /* セクション内の最後の段落の下マージンはコンタクト情報との間隔に任せる */
             margin-bottom: 0;
         }
 
         .important {
             font-weight: 700;
             color: var(--important-text-color);
-            padding: 10px;
-            background-color: #fceded; /* Light red background for important text */
-            border-left: 3px solid var(--important-text-color);
+            padding: 10px 15px; /* パディング調整 */
+            background-color: #fceded; /* 重要なテキスト用の薄い赤背景 */
+            border-left: 4px solid var(--important-text-color); /* ボーダー調整 */
             border-radius: 4px;
             margin: 1.5em 0;
         }
@@ -120,17 +122,47 @@
             color: var(--primary-hover-color);
         }
 
-        hr { /* Not strictly used anymore, but good to style if it appears */
-            border: 0;
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 20px 0;
+        /* Hide inactive language by default */
+        .content-section[lang="en"] .oss-info,
+        .content-section[lang="ja"] .oss-info {
+             /* Initially hide both, JS will show the correct one */
+        }
+        .oss-info[lang="en"], .oss-info[lang="ja"]{
+            display: none; /* JSで言語切り替え時に表示を制御 */
         }
 
-        /* Hide inactive language by default */
-        .content-section[lang="en"] {
-            display: none;
+
+        .page-footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0 10px 0; /* 下のパディングを少し減らす */
+            margin-top: 30px; /* コンテナとの間にスペースを設ける */
+            font-size: 0.9em;
+            color: var(--footer-text-color);
         }
+        .page-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .page-footer a:hover {
+            text-decoration: underline;
+            color: var(--primary-hover-color);
+        }
+        .oss-declaration {
+            font-size: 0.85em;
+            color: var(--text-light-color);
+            padding-bottom: 20px; /* フッター全体の底のスペース */
+            text-align: center;
+        }
+        .oss-declaration a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .oss-declaration a:hover {
+            text-decoration: underline;
+            color: var(--primary-hover-color);
+        }
+
     </style>
 </head>
 <body>
@@ -163,23 +195,41 @@
         </div>
     </div>
 
+    <footer class="page-footer">
+        <p>Powered By <a href="https://paicha.cloud" target="_blank" rel="noopener noreferrer">paicha.cloud</a></p>
+    </footer>
+    <div class="oss-declaration">
+        <div class="oss-info" lang="ja">
+            <p>このページのソースコードは<a href="https://github.com/yukisakuna/fk-mail-abuse" target="_blank" rel="noopener noreferrer">GitHubで公開</a>されており、オープンソースソフトウェア (OSS) です。</p>
+        </div>
+        <div class="oss-info" lang="en">
+            <p>The source code for this page is <a href="https://github.com/yukisakuna/fk-mail-abuse" target="_blank" rel="noopener noreferrer">available on GitHub</a> and is Open Source Software (OSS).</p>
+        </div>
+    </div>
+
     <script>
         const langJaButton = document.getElementById('lang-ja');
         const langEnButton = document.getElementById('lang-en');
         const contentJa = document.querySelector('.content-section[lang="ja"]');
         const contentEn = document.querySelector('.content-section[lang="en"]');
+        const ossInfoJa = document.querySelector('.oss-info[lang="ja"]');
+        const ossInfoEn = document.querySelector('.oss-info[lang="en"]');
         const htmlTag = document.documentElement;
 
         function switchToLang(lang) {
             if (lang === 'ja') {
                 contentJa.style.display = 'block';
                 contentEn.style.display = 'none';
+                ossInfoJa.style.display = 'block';
+                ossInfoEn.style.display = 'none';
                 langJaButton.classList.add('active');
                 langEnButton.classList.remove('active');
                 htmlTag.lang = 'ja';
             } else if (lang === 'en') {
                 contentJa.style.display = 'none';
                 contentEn.style.display = 'block';
+                ossInfoJa.style.display = 'none';
+                ossInfoEn.style.display = 'block';
                 langJaButton.classList.remove('active');
                 langEnButton.classList.add('active');
                 htmlTag.lang = 'en';
@@ -191,7 +241,7 @@
 
         // Set initial language based on browser preference or default to Japanese
         const userLang = navigator.language || navigator.userLanguage;
-        if (userLang.toLowerCase().startsWith('en')) {
+        if (userLang && userLang.toLowerCase().startsWith('en')) { // userLangが存在するかチェック
             switchToLang('en');
         } else {
             switchToLang('ja'); // Default
