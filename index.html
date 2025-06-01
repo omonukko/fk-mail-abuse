@@ -3,88 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>公開メールサービスについて</title>
+    <title>公開メールサービスについて | Public Email Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #007bff; /* Button and link color */
+            --primary-hover-color: #0056b3;
+            --text-color: #333;
+            --text-light-color: #555;
+            --background-color: #f4f7f9; /* Light gray background */
+            --container-background: #ffffff;
+            --border-color: #e0e0e0;
+            --important-text-color: #e74c3c; /* Red for important messages */
+            --shadow-color: rgba(0, 0, 0, 0.08);
+        }
+
         body {
-            font-family: sans-serif;
-            line-height: 1.6;
+            font-family: 'Roboto', 'Noto Sans JP', sans-serif; /* English font first, then Japanese */
+            line-height: 1.7;
+            margin: 0;
             padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
         }
-        .container {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .important {
-            font-weight: bold;
-            color: #d9534f;
-        }
-        .contact {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-        }
+
         .lang-switcher {
-            margin-bottom: 20px;
-            text-align: right;
+            margin-bottom: 25px;
+            padding: 10px;
+            background-color: var(--container-background);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            display: flex;
+            gap: 10px;
         }
+
         .lang-switcher button {
-            padding: 8px 15px;
-            margin-left: 10px;
+            font-family: inherit;
+            padding: 10px 18px;
             cursor: pointer;
-            border: 1px solid #007bff;
-            background-color: #007bff;
-            color: white;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
+            border: 1px solid transparent;
+            background-color: transparent;
+            color: var(--text-light-color);
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
+
         .lang-switcher button:hover {
-            background-color: #0056b3;
+            background-color: var(--primary-color);
+            color: white;
         }
+
         .lang-switcher button.active {
-            background-color: #0056b3;
-            font-weight: bold;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 700;
+            border-color: var(--primary-hover-color);
         }
-        /* Initially hide English content */
-        [lang="en"] {
+
+        .container {
+            background-color: var(--container-background);
+            padding: 30px 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .content-section p {
+            margin-bottom: 1em;
+            color: var(--text-light-color);
+        }
+
+        .content-section p:first-child {
+            margin-top: 0;
+        }
+         .content-section p:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .important {
+            font-weight: 700;
+            color: var(--important-text-color);
+            padding: 10px;
+            background-color: #fceded; /* Light red background for important text */
+            border-left: 3px solid var(--important-text-color);
+            border-radius: 4px;
+            margin: 1.5em 0;
+        }
+
+        .contact-info {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5em;
+        }
+
+        .contact-info a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+            color: var(--primary-hover-color);
+        }
+
+        hr { /* Not strictly used anymore, but good to style if it appears */
+            border: 0;
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 20px 0;
+        }
+
+        /* Hide inactive language by default */
+        .content-section[lang="en"] {
             display: none;
         }
     </style>
 </head>
 <body>
     <div class="lang-switcher">
-        <button id="lang-ja" class="active">日本語</button>
+        <button id="lang-ja">日本語</button>
         <button id="lang-en">English</button>
     </div>
 
     <div class="container">
-        <div lang="ja">
+        <div class="content-section" lang="ja">
             <p>これは公開メールサービスです。</p>
             <p>送信は禁止されており、合法的な使用を目的としています。</p>
-            <p class="important">このメールサービスでの問題があった場合、ドメイン名でのブロックではなくIPでのブロックを検討してください。</p>
+            <p class="important">このメールサービスでの問題があった場合、ドメイン名でのブロックではなくIPアドレスでのブロックを検討してください。</p>
             <p>ご協力いただきありがとうございます。</p>
-            <hr>
-            <div class="contact">
+            <div class="contact-info">
                 <p>このメールサービスについて問題や法的に関する質問がありますか？</p>
-                <p>abuse contact : <a href="mailto:abuse@paicha.cloud">abuse@paicha.cloud</a></p>
+                <p>Abuse Contact: <a href="mailto:abuse@paicha.cloud">abuse@paicha.cloud</a></p>
             </div>
         </div>
 
-        <div lang="en">
+        <div class="content-section" lang="en">
             <p>This is a public email service.</p>
             <p>Sending emails from this service is prohibited. This service is intended for legitimate use only.</p>
             <p class="important">If you encounter any issues with emails from this service, please consider blocking the IP address instead of the domain name.</p>
             <p>Thank you for your cooperation.</p>
-            <hr>
-            <div class="contact">
+            <div class="contact-info">
                 <p>Do you have any questions or legal inquiries regarding this email service?</p>
-                <p>Abuse contact: <a href="mailto:abuse@paicha.cloud">abuse@paicha.cloud</a></p>
+                <p>Abuse Contact: <a href="mailto:abuse@paicha.cloud">abuse@paicha.cloud</a></p>
             </div>
         </div>
     </div>
@@ -92,39 +166,36 @@
     <script>
         const langJaButton = document.getElementById('lang-ja');
         const langEnButton = document.getElementById('lang-en');
-        const contentJa = document.querySelector('div[lang="ja"]');
-        const contentEn = document.querySelector('div[lang="en"]');
+        const contentJa = document.querySelector('.content-section[lang="ja"]');
+        const contentEn = document.querySelector('.content-section[lang="en"]');
+        const htmlTag = document.documentElement;
 
-        // Function to switch language
         function switchToLang(lang) {
             if (lang === 'ja') {
                 contentJa.style.display = 'block';
                 contentEn.style.display = 'none';
                 langJaButton.classList.add('active');
                 langEnButton.classList.remove('active');
-                document.documentElement.lang = 'ja';
+                htmlTag.lang = 'ja';
             } else if (lang === 'en') {
                 contentJa.style.display = 'none';
                 contentEn.style.display = 'block';
                 langJaButton.classList.remove('active');
                 langEnButton.classList.add('active');
-                document.documentElement.lang = 'en';
+                htmlTag.lang = 'en';
             }
         }
 
-        // Event listeners for buttons
         langJaButton.addEventListener('click', () => switchToLang('ja'));
         langEnButton.addEventListener('click', () => switchToLang('en'));
 
-        // Set initial language (default to Japanese)
-        switchToLang('ja');
-        // You can also try to detect browser language here if needed
-        // const userLang = navigator.language || navigator.userLanguage;
-        // if (userLang.startsWith('en')) {
-        //    switchToLang('en');
-        // } else {
-        //    switchToLang('ja');
-        // }
+        // Set initial language based on browser preference or default to Japanese
+        const userLang = navigator.language || navigator.userLanguage;
+        if (userLang.toLowerCase().startsWith('en')) {
+            switchToLang('en');
+        } else {
+            switchToLang('ja'); // Default
+        }
     </script>
 </body>
 </html>
