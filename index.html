@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://hamutan86.pythonanywhere.com/nonstress/nonstress.js" async defer></script>
     <style>
         :root {
             --primary-color: #007bff; /* ボタンやリンクの色 */
@@ -19,10 +20,11 @@
             --important-text-color: #e74c3c; /* 重要なメッセージ用の赤色 */
             --footer-text-color: #777;
             --shadow-color: rgba(0, 0, 0, 0.08);
+            --success-color: #28a745;
         }
 
         body {
-            font-family: 'Roboto', 'Noto Sans JP', sans-serif; /* 英語フォントを先に、次に日本語フォント */
+            font-family: 'Roboto', 'Noto Sans JP', sans-serif;
             line-height: 1.7;
             margin: 0;
             padding: 20px;
@@ -31,7 +33,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh; /* ページ全体の高さをビューポートの高さ以上にする */
+            min-height: 100vh;
             box-sizing: border-box;
         }
 
@@ -76,7 +78,7 @@
             box-shadow: 0 4px 15px var(--shadow-color);
             max-width: 700px;
             width: 100%;
-            margin-bottom: auto; /* フッターを一番下に押しやるために追加 */
+            margin-bottom: auto;
         }
 
         .content-section p {
@@ -87,16 +89,16 @@
         .content-section p:first-child {
             margin-top: 0;
         }
-         .content-section p:last-of-type { /* セクション内の最後の段落の下マージンはコンタクト情報との間隔に任せる */
+        .content-section p:last-of-type {
             margin-bottom: 0;
         }
 
         .important {
             font-weight: 700;
             color: var(--important-text-color);
-            padding: 10px 15px; /* パディング調整 */
-            background-color: #fceded; /* 重要なテキスト用の薄い赤背景 */
-            border-left: 4px solid var(--important-text-color); /* ボーダー調整 */
+            padding: 10px 15px;
+            background-color: #fceded;
+            border-left: 4px solid var(--important-text-color);
             border-radius: 4px;
             margin: 1.5em 0;
         }
@@ -106,63 +108,173 @@
             padding-top: 20px;
             border-top: 1px solid var(--border-color);
         }
-
-        .contact-info p {
-            margin-bottom: 0.5em;
-        }
-
+        .contact-info p { margin-bottom: 0.5em; }
         .contact-info a {
             color: var(--primary-color);
             text-decoration: none;
             font-weight: 500;
         }
-
         .contact-info a:hover {
             text-decoration: underline;
             color: var(--primary-hover-color);
         }
 
-        /* Hide inactive language by default */
-        .content-section[lang="en"] .oss-info,
-        .content-section[lang="ja"] .oss-info {
-             /* Initially hide both, JS will show the correct one */
-        }
         .oss-info[lang="en"], .oss-info[lang="ja"]{
-            display: none; /* JSで言語切り替え時に表示を制御 */
+            display: none;
         }
-
 
         .page-footer {
             width: 100%;
             text-align: center;
-            padding: 20px 0 10px 0; /* 下のパディングを少し減らす */
-            margin-top: 30px; /* コンテナとの間にスペースを設ける */
+            padding: 20px 0 10px 0;
+            margin-top: 30px;
             font-size: 0.9em;
             color: var(--footer-text-color);
         }
-        .page-footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-        .page-footer a:hover {
-            text-decoration: underline;
-            color: var(--primary-hover-color);
-        }
+        .page-footer a { color: var(--primary-color); text-decoration: none; }
+        .page-footer a:hover { text-decoration: underline; color: var(--primary-hover-color); }
+
         .oss-declaration {
             font-size: 0.85em;
             color: var(--text-light-color);
-            padding-bottom: 20px; /* フッター全体の底のスペース */
+            padding-bottom: 20px;
             text-align: center;
         }
-        .oss-declaration a {
-            color: var(--primary-color);
-            text-decoration: none;
+        .oss-declaration a { color: var(--primary-color); text-decoration: none; }
+        .oss-declaration a:hover { text-decoration: underline; color: var(--primary-hover-color); }
+
+        /* Abuse Form Styles */
+        .abuse-form-container {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
         }
-        .oss-declaration a:hover {
-            text-decoration: underline;
-            color: var(--primary-hover-color);
+        .abuse-form-container h3 {
+            margin-bottom: 20px;
+            color: var(--text-color);
+            font-weight: 700;
+        }
+        .abuse-form-container .form-group {
+            margin-bottom: 18px;
+        }
+        .abuse-form-container label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--text-light-color);
+        }
+        .abuse-form-container input[type="text"],
+        .abuse-form-container input[type="email"],
+        .abuse-form-container textarea {
+            width: calc(100% - 24px); /* padding 考慮 */
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        .abuse-form-container input[type="text"]:focus,
+        .abuse-form-container input[type="email"]:focus,
+        .abuse-form-container textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        .abuse-form-container textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .abuse-form-container button[type="submit"] {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .abuse-form-container button[type="submit"]:hover {
+            background-color: var(--primary-hover-color);
+        }
+        .abuse-form-container button[type="submit"]:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .form-status {
+            margin-top: 15px;
+            font-weight: 500;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .form-status.success {
+            background-color: #e6f7ec;
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+        .form-status.error {
+            background-color: #fceded;
+            color: var(--important-text-color);
+            border: 1px solid var(--important-text-color);
         }
 
+        /* Hamukasu CAPTCHA UI Styles (from user) */
+        .hamukasu-ui {
+          display: flex;
+          align-items: center;
+          font-size: 75%;
+        }
+        .hamukasu-ui-container {
+          width: fit-content;
+          /* height: 10vh; remove fixed height or adjust */
+          margin: 20px auto 20px auto; /* Adjusted margin for form context */
+          padding: 0.5em;
+          border: solid 1px;
+          border-color: var(--text-color); /* Adjusted for theme */
+          background-color: #efefef;
+          position: relative;
+          border-radius: 6px; /* Added for consistency */
+        }
+        .hamukasu-ui-result {
+          margin-right: 1em; /* Adjusted for smaller font */
+          margin-left: 1em; /* Adjusted for smaller font */
+          min-width: 60px; /* Ensure text doesn't jump too much */
+          text-align: center;
+        }
+        .hamukasu-ui-image {
+          width: 2.5em; /* Adjusted for smaller font */
+          height: 2.5em; /* Adjusted for smaller font */
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          vertical-align: middle;
+        }
+        .hamukasu-ui img.hamukasu-ui-image {
+          object-fit: contain;
+        }
+        .hamukasu-ui-image.failed {
+          filter: brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7456%) hue-rotate(357deg) brightness(100%) contrast(118%);
+        }
+        .hamukasu-ui-image.success {
+          filter: brightness(0) saturate(100%) invert(60%) sepia(82%) saturate(2531%) hue-rotate(78deg) brightness(110%) contrast(130%);
+        }
+        .hamukasu-ui-detail {
+          position: absolute;
+          right: 5px; /* Adjusted */
+          bottom: 2px; /* Adjusted */
+          font-size: 0.8em; /* Relative to parent .hamukasu-ui */
+        }
+        @media (prefers-color-scheme: dark) {
+          .hamukasu-ui-container {
+            border-color: var(--border-color); /* Use CSS var */
+            background-color: #232323;
+          }
+        }
     </style>
 </head>
 <body>
@@ -181,6 +293,39 @@
                 <p>このメールサービスについて問題や法的に関する質問がありますか？</p>
                 <p>Abuse Contact: <a href="mailto:abuse@paicha.cloud">abuse@paicha.cloud</a></p>
             </div>
+
+            <div class="abuse-form-container">
+                <h3>お問い合わせフォーム</h3>
+                <form id="abuseFormJa">
+                    <div class="form-group">
+                        <label for="nameJa">お名前:</label>
+                        <input type="text" id="nameJa" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailJa">メールアドレス:</label>
+                        <input type="email" id="emailJa" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contentJa">内容:</label>
+                        <textarea id="contentJa" name="content" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="logJa">ログ (任意):</label>
+                        <textarea id="logJa" name="log" rows="3"></textarea>
+                    </div>
+                    <div class="hamukasu-ui-container">
+                      <div class="hamukasu-ui">
+                        <img src="/img/img_clear-hamutan.png" alt="nonstress captcha" class="hamukasu-ui-image" />
+                        <div class="hamukasu-ui-result">検証中...</div>
+                        <div class="hamukasu-ui-detail">
+                          Powered by <a href="https://hamukasu-api.apidocumentation.com/guide/nonstress-captcha" target="_blank">nonstress CAPTCHA</a>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" disabled>送信</button>
+                </form>
+                <div id="formStatusJa" class="form-status" style="display: none;"></div>
+            </div>
         </div>
 
         <div class="content-section" lang="en">
@@ -191,6 +336,39 @@
             <div class="contact-info">
                 <p>Do you have any questions or legal inquiries regarding this email service?</p>
                 <p>Abuse Contact: <a href="mailto:abuse@paicha.cloud">abuse@paicha.cloud</a></p>
+            </div>
+
+            <div class="abuse-form-container">
+                <h3>Contact Form</h3>
+                <form id="abuseFormEn">
+                    <div class="form-group">
+                        <label for="nameEn">Name:</label>
+                        <input type="text" id="nameEn" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailEn">Email:</label>
+                        <input type="email" id="emailEn" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contentEn">Message:</label>
+                        <textarea id="contentEn" name="content" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="logEn">Logs (Optional):</label>
+                        <textarea id="logEn" name="log" rows="3"></textarea>
+                    </div>
+                     <div class="hamukasu-ui-container">
+                      <div class="hamukasu-ui">
+                        <img src="/img/img_clear-hamutan.png" alt="nonstress captcha" class="hamukasu-ui-image" />
+                        <div class="hamukasu-ui-result">Verifying...</div>
+                        <div class="hamukasu-ui-detail">
+                          Powered by <a href="https://hamukasu-api.apidocumentation.com/guide/nonstress-captcha" target="_blank">nonstress CAPTCHA</a>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" disabled>Submit</button>
+                </form>
+                <div id="formStatusEn" class="form-status" style="display: none;"></div>
             </div>
         </div>
     </div>
@@ -216,7 +394,8 @@
         const ossInfoEn = document.querySelector('.oss-info[lang="en"]');
         const htmlTag = document.documentElement;
 
-        function switchToLang(lang) {
+        // Store original switchToLang function
+        const originalSwitchToLang = function(lang) {
             if (lang === 'ja') {
                 contentJa.style.display = 'block';
                 contentEn.style.display = 'none';
@@ -234,18 +413,163 @@
                 langEnButton.classList.add('active');
                 htmlTag.lang = 'en';
             }
-        }
+        };
+        
+        // Enhanced switchToLang for CAPTCHA UI update
+        window.switchToLang = function(lang) {
+            originalSwitchToLang(lang);
+            waitForNonstress(() => {
+                const token = nonstress.getToken();
+                updateCaptchaUI(token, lang);
+            });
+        };
 
         langJaButton.addEventListener('click', () => switchToLang('ja'));
         langEnButton.addEventListener('click', () => switchToLang('en'));
 
-        // Set initial language based on browser preference or default to Japanese
+        // Set initial language
         const userLang = navigator.language || navigator.userLanguage;
-        if (userLang && userLang.toLowerCase().startsWith('en')) { // userLangが存在するかチェック
+        if (userLang && userLang.toLowerCase().startsWith('en')) {
             switchToLang('en');
         } else {
-            switchToLang('ja'); // Default
+            switchToLang('ja');
         }
+
+        // Hamukasu CAPTCHA UI Script & Form Submission
+        let hamukasuCaptchaSetting = { /* User provided settings can go here if needed */ };
+
+        function waitForNonstress(callback) {
+          const interval = setInterval(() => {
+            if (typeof nonstress !== "undefined" && typeof nonstress.getToken === "function") {
+              clearInterval(interval);
+              callback();
+            }
+          }, 50);
+        }
+
+        function updateCaptchaUI(currentToken, lang) {
+            const currentContentSection = document.querySelector(`.content-section[lang="${lang}"]`);
+            if (!currentContentSection) return;
+
+            const resultElem = currentContentSection.querySelector(".hamukasu-ui-result");
+            const imageElem = currentContentSection.querySelector(".hamukasu-ui-image");
+            const submitButton = currentContentSection.querySelector(`form button[type="submit"]`);
+
+            if (!resultElem || !imageElem || !submitButton) return;
+
+            const defaultImg = "/img/img_clear-hamutan.png"; // 画像を/img/配下に変更
+            const successImg = "/img/check-circle-fill.svg"; // 画像を/img/配下に変更
+            const failImg = "/img/x-circle-fill.svg"; // 画像を/img/配下に変更
+
+            if (currentToken === "Failed") {
+              resultElem.textContent = lang === 'ja' ? "認証失敗!" : "Failed!";
+              imageElem.setAttribute("src", failImg);
+              imageElem.classList.remove("success");
+              imageElem.classList.add("failed");
+              submitButton.disabled = true;
+            } else if (currentToken === "") {
+              resultElem.textContent = lang === 'ja' ? "検証中..." : "Verifying...";
+              imageElem.setAttribute("src", defaultImg);
+              imageElem.classList.remove("success", "failed");
+              submitButton.disabled = true;
+            } else { // Token acquired
+              resultElem.textContent = lang === 'ja' ? "認証成功!" : "Success!";
+              imageElem.setAttribute("src", successImg);
+              imageElem.classList.remove("failed");
+              imageElem.classList.add("success");
+              submitButton.disabled = false;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+          waitForNonstress(() => {
+            let lastValue = nonstress.getToken();
+            updateCaptchaUI(lastValue, htmlTag.lang || 'ja'); // Initial UI update
+
+            setInterval(() => {
+              const currentToken = nonstress.getToken();
+              if (currentToken !== lastValue) {
+                lastValue = currentToken;
+                updateCaptchaUI(currentToken, htmlTag.lang || 'ja');
+              }
+            }, 200); // Check slightly less frequently
+          });
+
+          async function handleFormSubmit(event, langSuffix) {
+            event.preventDefault();
+            const form = event.target;
+            const statusDiv = document.getElementById(`formStatus${langSuffix}`);
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'form-status'; // Reset classes
+            statusDiv.textContent = langSuffix === 'Ja' ? '送信中...' : 'Submitting...';
+            submitButton.disabled = true;
+
+            const captchaToken = nonstress.getToken();
+            if (captchaToken === "" || captchaToken === "Failed") {
+              statusDiv.textContent = langSuffix === 'Ja' ? 'CAPTCHA認証に失敗しました。ページを再読み込みして再度お試しください。' : 'CAPTCHA verification failed. Please refresh and try again.';
+              statusDiv.classList.add('error');
+              submitButton.disabled = false; // Allow re-try after fixing CAPTCHA
+              return;
+            }
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            data.captchaToken = captchaToken;
+            data.lang = langSuffix === 'Ja' ? 'ja' : 'en';
+
+            try {
+              const response = await fetch('https://paicha-abuse-worker.nyaacha.workers.dev/', { // 更新したAPIエンドポイント
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+              });
+
+              const result = await response.json();
+
+              if (response.ok && result.success) {
+                statusDiv.textContent = langSuffix === 'Ja' ? 'フォームが正常に送信されました。受付メールをご確認ください。' : 'Form submitted successfully. Please check your email for confirmation.';
+                statusDiv.classList.add('success');
+                form.reset();
+                // Reset CAPTCHA UI appearance after successful submission
+                waitForNonstress(() => {
+                    updateCaptchaUI(nonstress.getToken(), data.lang);
+                });
+
+              } else {
+                statusDiv.textContent = (langSuffix === 'Ja' ? '送信に失敗しました: ' : 'Submission failed: ') + (result.error || 'Unknown error. Please try again.');
+                statusDiv.classList.add('error');
+              }
+            } catch (error) {
+              console.error('Error submitting form:', error);
+              statusDiv.textContent = langSuffix === 'Ja' ? '送信中に予期せぬエラーが発生しました。' : 'An unexpected error occurred during submission.';
+              statusDiv.classList.add('error');
+            } finally {
+                // Re-enable button if CAPTCHA is valid, otherwise it remains disabled by updateCaptchaUI
+                waitForNonstress(() => {
+                    const currentToken = nonstress.getToken();
+                    if (currentToken && currentToken !== "Failed") {
+                         submitButton.disabled = false;
+                    } else {
+                        submitButton.disabled = true; // Keep it disabled if CAPTCHA became invalid
+                    }
+                    // If form was successful, it's reset, button should be disabled until new CAPTCHA success
+                    if (statusDiv.classList.contains('success')) {
+                        submitButton.disabled = true;
+                         // And trigger a UI update for captcha to go back to verifying...
+                        updateCaptchaUI("", data.lang); // "" makes it "Verifying..."
+                    }
+                });
+            }
+          }
+
+          const formJa = document.getElementById('abuseFormJa');
+          const formEn = document.getElementById('abuseFormEn');
+
+          if (formJa) formJa.addEventListener('submit', (e) => handleFormSubmit(e, 'Ja'));
+          if (formEn) formEn.addEventListener('submit', (e) => handleFormSubmit(e, 'En'));
+        });
     </script>
 </body>
 </html>
