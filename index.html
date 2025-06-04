@@ -208,9 +208,15 @@
         }
 
         .alert-content {
-            color: #92400e;
+            color: #92400e; /* ダークモードでの可読性も考慮が必要な場合、別途指定 */
             font-weight: 500;
         }
+        @media (prefers-color-scheme: dark) {
+            .alert-content {
+                 color: var(--warning-light); /* 例: ダークモード用の警告テキスト色 */
+             }
+        }
+
 
         /* Separator */
         .separator {
@@ -337,24 +343,30 @@
             min-height: 120px;
         }
 
-        /* CAPTCHA - 元のスタイルを保持しつつ改良 */
+        /* CAPTCHA - 改良されたスタイル */
         .hamukasu-ui-container {
-            display: inline-flex;
+            display: flex;
+            width: clamp(280px, 80%, 420px); /* 幅を可変にし、最小・最大幅を指定 */
+            margin: 20px auto; /* フォーム内で中央揃え */
             align-items: center;
-            gap: 0.6em;
-            padding: 0.75em 1em;
-            margin: 20px auto;
+            justify-content: flex-start; /* 要素を左から配置 */
+            gap: 1em; /* 要素間の隙間を調整 */
+            padding: 1em 1.5em; /* 内側の余白を調整 */
             background: var(--border-light);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             position: relative;
-            font-size: 0.9rem;
+            font-size: 1rem; /* ベースのフォントサイズを少し大きく */
             transition: all 0.2s ease;
+            box-sizing: border-box; /* paddingとborderをwidth/heightに含める */
         }
 
         .hamukasu-ui-image {
-            flex: 0 0 2.5em;
-            height: 2.5em;
+            flex: 0 0 3.5em; /* 画像コンテナのサイズ */
+            height: 3.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hamukasu-ui-image img {
@@ -364,10 +376,18 @@
         }
 
         .hamukasu-ui-result {
-            min-width: 70px;
-            text-align: center;
-            font-weight: 700;
+            flex-grow: 1; /* テキスト部分が残りのスペースを埋める */
+            text-align: left; /* テキストを左寄せ */
+            font-weight: 600;
+            font-size: 0.95em; /* 親要素のfont-sizeに対する相対サイズ */
+            color: var(--text); /* 通常時のテキスト色 */
         }
+        @media (prefers-color-scheme: dark) {
+            .hamukasu-ui-result {
+                 color: var(--text); /* ダークモードでも同じ色か、必要なら調整 */
+            }
+        }
+
 
         .hamukasu-ui-image.failed img {
             filter: brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7456%) hue-rotate(357deg) brightness(100%) contrast(118%);
@@ -379,10 +399,10 @@
 
         .hamukasu-ui-detail {
             position: absolute;
-            bottom: -1.8em;
+            bottom: -2em; /* 位置を調整 */
             left: 0;
             width: 100%;
-            font-size: 0.8em;
+            font-size: 0.75em; /* フォントサイズを調整 */
             text-align: center;
             color: var(--text-muted);
             pointer-events: none;
@@ -397,6 +417,9 @@
         .hamukasu-ui-detail a {
             color: var(--primary);
             text-decoration: none;
+        }
+        .hamukasu-ui-detail a:hover {
+            text-decoration: underline;
         }
 
         /* Submit Button */
@@ -462,11 +485,22 @@
             border: 1px solid var(--success);
             color: #065f46;
         }
+         @media (prefers-color-scheme: dark) {
+            .form-status.success {
+                 color: var(--success-light); /* 例: ダークモード用の成功テキスト色 */
+             }
+        }
+
 
         .form-status.error {
             background: var(--error-light);
             border: 1px solid var(--error);
             color: #991b1b;
+        }
+        @media (prefers-color-scheme: dark) {
+            .form-status.error {
+                 color: var(--error-light); /* 例: ダークモード用のエラーテキスト色 */
+             }
         }
 
         .status-icon {
@@ -534,6 +568,17 @@
             .prose p:first-child {
                 font-size: 1.125rem;
             }
+            
+            /* CAPTCHAの幅調整をスマートフォンにも適用 */
+            .hamukasu-ui-container {
+                width: clamp(250px, 90%, 380px); /* スマートフォン向けに調整 */
+                padding: 0.8em 1em;
+                font-size: 0.9rem;
+            }
+            .hamukasu-ui-image {
+                flex-basis: 3em;
+                height: 3em;
+            }
         }
 
         /* Icons (SVG) */
@@ -544,7 +589,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Language Switcher -->
         <div class="lang-switcher">
             <div class="lang-buttons">
                 <button class="lang-button active" id="lang-ja">
@@ -562,7 +606,6 @@
             </div>
         </div>
 
-        <!-- Main Card -->
         <div class="main-card">
             <div class="card-header">
                 <div class="header-icon">
@@ -577,7 +620,6 @@
             </div>
 
             <div class="card-content">
-                <!-- Japanese Content -->
                 <div class="content-section active" id="content-ja">
                     <div class="prose">
                         <p>これは公開メールサービスです。</p>
@@ -645,8 +687,7 @@
                             </div>
 
                             <div class="hamukasu-ui-container">
-                                <div class="hamukasu-ui">
-                                    <img src="/img/img_clear-hamutan.png" alt="nonstress captcha" class="hamukasu-ui-image" />
+                                <div class="hamukasu-ui"> <img src="/img/img_clear-hamutan.png" alt="nonstress captcha" class="hamukasu-ui-image" />
                                     <div class="hamukasu-ui-result">検証中...</div>
                                     <div class="hamukasu-ui-detail">
                                         Powered by <a href="https://hamukasu-api.apidocumentation.com/guide/nonstress-captcha" target="_blank">nonstress CAPTCHA</a>
@@ -666,7 +707,6 @@
                     </div>
                 </div>
 
-                <!-- English Content -->
                 <div class="content-section" id="content-en">
                     <div class="prose">
                         <p>This is a public email service.</p>
@@ -733,7 +773,7 @@
                             </div>
 
                             <div class="hamukasu-ui-container">
-                                <div class="hamukasu-ui">
+                               <div class="hamukasu-ui">
                                     <img src="/img/img_clear-hamutan.png" alt="nonstress captcha" class="hamukasu-ui-image" />
                                     <div class="hamukasu-ui-result">Verifying...</div>
                                     <div class="hamukasu-ui-detail">
@@ -756,7 +796,6 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <div class="footer">
             <p class="footer-text">
                 Powered By 
@@ -818,7 +857,9 @@
             originalSwitchToLang(lang);
             waitForNonstress(() => {
                 const token = nonstress.getToken();
-                updateCaptchaUI(token, lang);
+                // Ensure the CAPTCHA UI elements are correctly selected for the current language
+                // The updateCaptchaUI function itself should handle finding elements within the active content section
+                updateCaptchaUI(token, lang); 
             });
         };
 
@@ -846,49 +887,63 @@
         }
 
         function updateCaptchaUI(currentToken, lang) {
-            const currentContentSection = document.querySelector(`#content-${lang}`);
-            if (!currentContentSection) return;
+            // Select elements within the currently active language content section
+            const currentContentSection = document.querySelector(`#content-${lang}.content-section.active`);
+            if (!currentContentSection) {
+                // Fallback to the specified lang if active class isn't immediately set (e.g., during initial load)
+                 const fallbackContentSection = document.querySelector(`#content-${lang}`);
+                 if (!fallbackContentSection) return; // Still no section found
+                 //This part might be redundant if switchToLang correctly sets active class before calling this
+            }
+            
+            // Ensure we are working within the correct language context
+            const activeForm = document.querySelector(`#abuseForm${lang === 'ja' ? 'Ja' : 'En'}`);
+            if (!activeForm) return;
 
-            const resultElem = currentContentSection.querySelector(".hamukasu-ui-result");
-            const imageElem = currentContentSection.querySelector(".hamukasu-ui-image");
-            const submitButton = currentContentSection.querySelector(`form button[type="submit"]`);
 
-            if (!resultElem || !imageElem || !submitButton) return;
+            const resultElem = activeForm.querySelector(".hamukasu-ui-result");
+            const imageElem = activeForm.querySelector(".hamukasu-ui-image"); // This targets the img tag container
+            const imgTag = imageElem ? imageElem.querySelector("img") : null; // Get the actual img tag
+            const submitButton = activeForm.querySelector(`button[type="submit"]`);
+
+            if (!resultElem || !imgTag || !submitButton) return;
 
             const defaultImg = "/img/img_clear-hamutan.png";
-            const successImg = "/img/check-circle-fill.svg";
-            const failImg = "/img/x-circle-fill.svg";
+            const successImg = "/img/check-circle-fill.svg"; // Ensure these paths are correct
+            const failImg = "/img/x-circle-fill.svg";       // Ensure these paths are correct
 
             if (currentToken === "Failed") {
               resultElem.textContent = lang === 'ja' ? "認証失敗!" : "Failed!";
-              imageElem.setAttribute("src", failImg);
+              imgTag.setAttribute("src", failImg);
               imageElem.classList.remove("success");
               imageElem.classList.add("failed");
               submitButton.disabled = true;
             } else if (currentToken === "") {
               resultElem.textContent = lang === 'ja' ? "検証中..." : "Verifying...";
-              imageElem.setAttribute("src", defaultImg);
+              imgTag.setAttribute("src", defaultImg);
               imageElem.classList.remove("success", "failed");
               submitButton.disabled = true;
             } else {
               resultElem.textContent = lang === 'ja' ? "認証成功!" : "Success!";
-              imageElem.setAttribute("src", successImg);
+              imgTag.setAttribute("src", successImg);
               imageElem.classList.remove("failed");
               imageElem.classList.add("success");
               submitButton.disabled = false;
             }
         }
 
+
         document.addEventListener("DOMContentLoaded", () => {
           waitForNonstress(() => {
             let lastValue = nonstress.getToken();
-            updateCaptchaUI(lastValue, htmlTag.lang || 'ja');
+            updateCaptchaUI(lastValue, htmlTag.lang || (userLang && userLang.toLowerCase().startsWith('en') ? 'en' : 'ja') );
+
 
             setInterval(() => {
               const currentToken = nonstress.getToken();
               if (currentToken !== lastValue) {
                 lastValue = currentToken;
-                updateCaptchaUI(currentToken, htmlTag.lang || 'ja');
+                updateCaptchaUI(currentToken, htmlTag.lang || (userLang && userLang.toLowerCase().startsWith('en') ? 'en' : 'ja') );
               }
             }, 200);
           });
@@ -900,16 +955,23 @@
             const statusText = document.getElementById(`status-text-${langSuffix.toLowerCase()}`);
             const submitButton = form.querySelector('button[type="submit"]');
 
-            statusDiv.classList.remove('success', 'error');
+            statusDiv.classList.remove('show','success', 'error'); // ensure show is also removed before re-adding
             statusDiv.classList.add('show');
             statusText.textContent = langSuffix === 'Ja' ? '送信中...' : 'Submitting...';
             submitButton.disabled = true;
+            
+            // Add a spinner to the button if you have one
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.innerHTML = `<span class="spinner"></span> ${langSuffix === 'Ja' ? '送信中' : 'Submitting'}`;
+
 
             const captchaToken = nonstress.getToken();
             if (captchaToken === "" || captchaToken === "Failed") {
               statusText.textContent = langSuffix === 'Ja' ? 'CAPTCHA認証に失敗しました。ページを再読み込みして再度お試しください。' : 'CAPTCHA verification failed. Please refresh and try again.';
               statusDiv.classList.add('error');
-              submitButton.disabled = false;
+              // submitButton.disabled = false; // Keep disabled until CAPTCHA is re-validated
+              updateCaptchaUI(captchaToken, langSuffix === 'Ja' ? 'ja' : 'en'); // Reflect CAPTCHA failure state
+              submitButton.innerHTML = originalButtonText; // Restore button text
               return;
             }
 
@@ -931,8 +993,11 @@
                 statusText.textContent = langSuffix === 'Ja' ? 'フォームが正常に送信されました。受付メールをご確認ください。' : 'Form submitted successfully. Please check your email for confirmation.';
                 statusDiv.classList.add('success');
                 form.reset();
+                // After successful submission and reset, re-initialize CAPTCHA state to "Verifying..."
+                // and disable submit button until CAPTCHA is passed again.
                 waitForNonstress(() => {
-                    updateCaptchaUI(nonstress.getToken(), data.lang);
+                    nonstress.reset(); // Assuming there's a reset method or simply re-fetch token
+                    updateCaptchaUI(nonstress.getToken(), data.lang); 
                 });
 
               } else {
@@ -944,16 +1009,16 @@
               statusText.textContent = langSuffix === 'Ja' ? '送信中に予期せぬエラーが発生しました。' : 'An unexpected error occurred during submission.';
               statusDiv.classList.add('error');
             } finally {
+                submitButton.innerHTML = originalButtonText; // Restore button text in all cases
+                // Re-evaluate submit button state based on current CAPTCHA status
                 waitForNonstress(() => {
                     const currentToken = nonstress.getToken();
-                    if (currentToken && currentToken !== "Failed") {
-                         submitButton.disabled = false;
+                    if (statusDiv.classList.contains('success')) { // If form was successful, keep disabled
+                        submitButton.disabled = true;
+                    } else if (currentToken && currentToken !== "Failed") {
+                        submitButton.disabled = false;
                     } else {
                         submitButton.disabled = true;
-                    }
-                    if (statusDiv.classList.contains('success')) {
-                        submitButton.disabled = true;
-                        updateCaptchaUI("", data.lang);
                     }
                 });
             }
