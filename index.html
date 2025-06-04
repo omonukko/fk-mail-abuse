@@ -276,6 +276,53 @@
           }
         }
     </style>
+    <!-- Hamukasu CAPTCHA UI Styles (rev.2025-06-04) -->
+    <style>
+    .hamukasu-ui-container{
+        /* 全体のボックス */
+        display:inline-flex;              /* インライン要素でも自然に並ぶ */
+        align-items:center;               /* 縦位置そろえ */
+        gap:.6em;                         /* 子要素間の余白 */
+        padding:.75em 1em;
+        margin:20px auto;                 /* form 内中央寄せ */
+        background:#efefef;
+        border:1px solid var(--text-color);
+        border-radius:6px;
+        position:relative;                /* detail を絶対配置する土台 */
+        font-size:.9rem;                  /* 読みやすいサイズに */
+    }
+    .hamukasu-ui-image{
+        flex:0 0 2.5em;                   /* 固定幅で潰れない */
+        height:2.5em;
+    }
+    .hamukasu-ui-image img{
+        width:100%;
+        height:100%;
+        object-fit:contain;
+    }
+    .hamukasu-ui-result{
+        min-width:70px;                   /* 数値揺れ抑止 */
+        text-align:center;
+        font-weight:700;
+    }
+    .hamukasu-ui-image.failed   img{filter:brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7456%) hue-rotate(357deg) brightness(100%) contrast(118%);}
+    .hamukasu-ui-image.success  img{filter:brightness(0) saturate(100%) invert(60%) sepia(82%)  saturate(2531%) hue-rotate(78deg)  brightness(110%) contrast(130%);}
+    .hamukasu-ui-detail{
+        position:absolute;
+        bottom:-1.8em;                    /* ボックスの真下に */
+        left:0;
+        width:100%;
+        font-size:.8em;
+        text-align:center;
+        color:var(--text-light-color);
+        pointer-events:none;              /* クリック貫通 */
+        opacity:0;                        /* デフォは非表示 */
+        transition:opacity .2s ease;
+    }
+    .hamukasu-ui-container:hover .hamukasu-ui-detail{
+        opacity:1;
+    }
+    </style>
 </head>
 <body>
     <div class="lang-switcher">
@@ -292,10 +339,11 @@
             <div class="contact-info">
                 <p>このメールサービスについて問題や法的に関する質問がありますか？</p>
                 <p>Abuse Contact: <a href="mailto:abuse@paicha.cloud">abuse@paicha.cloud</a></p>
+                <p>に連絡するか、以下のフォームに入力してください</p>
             </div>
 
             <div class="abuse-form-container">
-                <h3>お問い合わせフォーム</h3>
+                <h3>Abuseフォーム</h3>
                 <form id="abuseFormJa">
                     <div class="form-group">
                         <label for="nameJa">お名前:</label>
@@ -339,7 +387,7 @@
             </div>
 
             <div class="abuse-form-container">
-                <h3>Contact Form</h3>
+                <h3>Abuse Form</h3>
                 <form id="abuseFormEn">
                     <div class="form-group">
                         <label for="nameEn">Name:</label>
