@@ -338,62 +338,102 @@
         }
 
         /* CAPTCHA - 元のスタイルを保持しつつ改良 */
+        /* CAPTCHA - 元のスタイルに戻す */
+        .hamukasu-ui {
+          display: flex;
+          align-items: center;
+          font-size: 75%;
+        }
         .hamukasu-ui-container {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6em;
-            padding: 0.75em 1em;
-            margin: 20px auto;
-            background: var(--border-light);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            position: relative;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
+          width: fit-content;
+          margin: 20px auto 20px auto;
+          padding: 0.5em;
+          border: solid 1px;
+          border-color: var(--text);
+          background-color: #efefef;
+          position: relative;
+          border-radius: 6px;
         }
-
-        .hamukasu-ui-image {
-            flex: 0 0 2.5em;
-            height: 2.5em;
-        }
-
-        .hamukasu-ui-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
         .hamukasu-ui-result {
-            min-width: 70px;
-            text-align: center;
-            font-weight: 700;
+          margin-right: 1em;
+          margin-left: 1em;
+          min-width: 60px;
+          text-align: center;
         }
-
-        .hamukasu-ui-image.failed img {
-            filter: brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7456%) hue-rotate(357deg) brightness(100%) contrast(118%);
+        .hamukasu-ui-image {
+          width: 2.5em;
+          height: 2.5em;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          vertical-align: middle;
         }
-
-        .hamukasu-ui-image.success img {
-            filter: brightness(0) saturate(100%) invert(60%) sepia(82%) saturate(2531%) hue-rotate(78deg) brightness(110%) contrast(130%);
+        .hamukasu-ui img.hamukasu-ui-image {
+          object-fit: contain;
         }
-
+        .hamukasu-ui-image.failed {
+          filter: brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7456%) hue-rotate(357deg) brightness(100%) contrast(118%);
+        }
+        .hamukasu-ui-image.success {
+          filter: brightness(0) saturate(100%) invert(60%) sepia(82%) saturate(2531%) hue-rotate(78deg) brightness(110%) contrast(130%);
+        }
         .hamukasu-ui-detail {
-            position: absolute;
-            bottom: -1.8em;
-            left: 0;
-            width: 100%;
-            font-size: 0.8em;
-            text-align: center;
-            color: var(--text-muted);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.2s ease;
+          position: absolute;
+          right: 5px;
+          bottom: 2px;
+          font-size: 0.8em;
+        }
+        @media (prefers-color-scheme: dark) {
+          .hamukasu-ui-container {
+            border-color: var(--border-color);
+            background-color: #232323;
+          }
         }
 
-        .hamukasu-ui-container:hover .hamukasu-ui-detail {
-            opacity: 1;
+        /* 改良版のCAPTCHAスタイル（rev.2025-06-04）も追加 */
+        .hamukasu-ui-container{
+            display:inline-flex;
+            align-items:center;
+            gap:.6em;
+            padding:.75em 1em;
+            margin:20px auto;
+            background:#efefef;
+            border:1px solid var(--text);
+            border-radius:6px;
+            position:relative;
+            font-size:.9rem;
         }
-
+        .hamukasu-ui-image{
+            flex:0 0 2.5em;
+            height:2.5em;
+        }
+        .hamukasu-ui-image img{
+            width:100%;
+            height:100%;
+            object-fit:contain;
+        }
+        .hamukasu-ui-result{
+            min-width:70px;
+            text-align:center;
+            font-weight:700;
+        }
+        .hamukasu-ui-image.failed   img{filter:brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7456%) hue-rotate(357deg) brightness(100%) contrast(118%);}
+        .hamukasu-ui-image.success  img{filter:brightness(0) saturate(100%) invert(60%) sepia(82%)  saturate(2531%) hue-rotate(78deg)  brightness(110%) contrast(130%);}
+        .hamukasu-ui-detail{
+            position:absolute;
+            bottom:-1.8em;
+            left:0;
+            width:100%;
+            font-size:.8em;
+            text-align:center;
+            color:var(--text-muted);
+            pointer-events:none;
+            opacity:0;
+            transition:opacity .2s ease;
+        }
+        .hamukasu-ui-container:hover .hamukasu-ui-detail{
+            opacity:1;
+        }
         .hamukasu-ui-detail a {
             color: var(--primary);
             text-decoration: none;
