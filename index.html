@@ -337,56 +337,64 @@
             min-height: 120px;
         }
 
-        /* CAPTCHA */
-        .captcha-container {
-            position: relative;
-            display: flex;
+        /* CAPTCHA - 元のスタイルを保持しつつ改良 */
+        .hamukasu-ui-container {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            padding: 1rem;
+            gap: 0.6em;
+            padding: 0.75em 1em;
+            margin: 20px auto;
+            background: var(--border-light);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            background: var(--border-light);
+            position: relative;
+            font-size: 0.9rem;
             transition: all 0.2s ease;
         }
 
-        .captcha-content {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+        .hamukasu-ui-image {
+            flex: 0 0 2.5em;
+            height: 2.5em;
         }
 
-        .captcha-icon {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .hamukasu-ui-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
-        .captcha-text {
-            font-weight: 500;
-            font-size: 0.875rem;
-        }
-
-        .captcha-detail {
-            position: absolute;
-            bottom: -2rem;
-            left: 0;
-            right: 0;
+        .hamukasu-ui-result {
+            min-width: 70px;
             text-align: center;
-            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .hamukasu-ui-image.failed img {
+            filter: brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7456%) hue-rotate(357deg) brightness(100%) contrast(118%);
+        }
+
+        .hamukasu-ui-image.success img {
+            filter: brightness(0) saturate(100%) invert(60%) sepia(82%) saturate(2531%) hue-rotate(78deg) brightness(110%) contrast(130%);
+        }
+
+        .hamukasu-ui-detail {
+            position: absolute;
+            bottom: -1.8em;
+            left: 0;
+            width: 100%;
+            font-size: 0.8em;
+            text-align: center;
             color: var(--text-muted);
+            pointer-events: none;
             opacity: 0;
             transition: opacity 0.2s ease;
-            pointer-events: none;
         }
 
-        .captcha-container:hover .captcha-detail {
+        .hamukasu-ui-container:hover .hamukasu-ui-detail {
             opacity: 1;
         }
 
-        .captcha-link {
+        .hamukasu-ui-detail a {
             color: var(--primary);
             text-decoration: none;
         }
@@ -435,26 +443,27 @@
         }
 
         /* Status Messages */
-        .status-message {
+        .form-status {
             display: none;
             align-items: flex-start;
             gap: 0.75rem;
             padding: 1rem;
             border-radius: var(--radius);
             margin-top: 1rem;
+            font-weight: 500;
         }
 
-        .status-message.show {
+        .form-status.show {
             display: flex;
         }
 
-        .status-message.success {
+        .form-status.success {
             background: var(--success-light);
             border: 1px solid var(--success);
             color: #065f46;
         }
 
-        .status-message.error {
+        .form-status.error {
             background: var(--error-light);
             border: 1px solid var(--error);
             color: #991b1b;
@@ -604,6 +613,7 @@
                             <span class="badge">Abuse Contact</span>
                             <a href="mailto:abuse@paicha.cloud" class="contact-link">abuse@paicha.cloud</a>
                         </div>
+                        <p style="color: var(--text-muted); margin-top: 1rem;">に連絡するか、以下のフォームに入力してください</p>
                     </div>
 
                     <div class="separator"></div>
@@ -612,45 +622,41 @@
                         <h3 class="section-title">Abuseフォーム</h3>
                         <p class="form-description">以下のフォームからお問い合わせいただけます</p>
 
-                        <form class="form" id="abuse-form-ja">
+                        <form class="form" id="abuseFormJa">
                             <div class="form-row two-cols">
                                 <div class="form-group">
-                                    <label class="form-label" for="name-ja">お名前</label>
-                                    <input class="form-input" type="text" id="name-ja" name="name" required>
+                                    <label class="form-label" for="nameJa">お名前</label>
+                                    <input class="form-input" type="text" id="nameJa" name="name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="email-ja">メールアドレス</label>
-                                    <input class="form-input" type="email" id="email-ja" name="email" required>
+                                    <label class="form-label" for="emailJa">メールアドレス</label>
+                                    <input class="form-input" type="email" id="emailJa" name="email" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="content-ja">内容</label>
-                                <textarea class="form-textarea" id="content-ja" name="content" required></textarea>
+                                <label class="form-label" for="contentJa">内容</label>
+                                <textarea class="form-textarea" id="contentJa" name="content" required></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="log-ja">ログ (任意)</label>
-                                <textarea class="form-textarea" id="log-ja" name="log" style="min-height: 80px;"></textarea>
+                                <label class="form-label" for="logJa">ログ (任意)</label>
+                                <textarea class="form-textarea" id="logJa" name="log" style="min-height: 80px;"></textarea>
                             </div>
 
-                            <div class="captcha-container" id="captcha-ja">
-                                <div class="captcha-content">
-                                    <div class="captcha-icon">
-                                        <div class="spinner"></div>
+                            <div class="hamukasu-ui-container">
+                                <div class="hamukasu-ui">
+                                    <img src="/img/img_clear-hamutan.png" alt="nonstress captcha" class="hamukasu-ui-image" />
+                                    <div class="hamukasu-ui-result">検証中...</div>
+                                    <div class="hamukasu-ui-detail">
+                                        Powered by <a href="https://hamukasu-api.apidocumentation.com/guide/nonstress-captcha" target="_blank">nonstress CAPTCHA</a>
                                     </div>
-                                    <div class="captcha-text">検証中...</div>
-                                </div>
-                                <div class="captcha-detail">
-                                    Powered by <a href="https://hamukasu-api.apidocumentation.com/guide/nonstress-captcha" target="_blank" class="captcha-link">nonstress CAPTCHA</a>
                                 </div>
                             </div>
 
-                            <button type="submit" class="submit-button" disabled id="submit-ja">
-                                送信
-                            </button>
+                            <button type="submit" class="submit-button" disabled>送信</button>
 
-                            <div class="status-message" id="status-ja">
+                            <div class="form-status" id="formStatusJa">
                                 <svg class="status-icon icon" viewBox="0 0 24 24">
                                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                                 </svg>
@@ -704,45 +710,41 @@
                         <h3 class="section-title">Abuse Report Form</h3>
                         <p class="form-description">Please use the form below to report any issues</p>
 
-                        <form class="form" id="abuse-form-en">
+                        <form class="form" id="abuseFormEn">
                             <div class="form-row two-cols">
                                 <div class="form-group">
-                                    <label class="form-label" for="name-en">Name</label>
-                                    <input class="form-input" type="text" id="name-en" name="name" required>
+                                    <label class="form-label" for="nameEn">Name</label>
+                                    <input class="form-input" type="text" id="nameEn" name="name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="email-en">Email</label>
-                                    <input class="form-input" type="email" id="email-en" name="email" required>
+                                    <label class="form-label" for="emailEn">Email</label>
+                                    <input class="form-input" type="email" id="emailEn" name="email" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="content-en">Message</label>
-                                <textarea class="form-textarea" id="content-en" name="content" required></textarea>
+                                <label class="form-label" for="contentEn">Message</label>
+                                <textarea class="form-textarea" id="contentEn" name="content" required></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="log-en">Logs (Optional)</label>
-                                <textarea class="form-textarea" id="log-en" name="log" style="min-height: 80px;"></textarea>
+                                <label class="form-label" for="logEn">Logs (Optional)</label>
+                                <textarea class="form-textarea" id="logEn" name="log" style="min-height: 80px;"></textarea>
                             </div>
 
-                            <div class="captcha-container" id="captcha-en">
-                                <div class="captcha-content">
-                                    <div class="captcha-icon">
-                                        <div class="spinner"></div>
+                            <div class="hamukasu-ui-container">
+                                <div class="hamukasu-ui">
+                                    <img src="/img/img_clear-hamutan.png" alt="nonstress captcha" class="hamukasu-ui-image" />
+                                    <div class="hamukasu-ui-result">Verifying...</div>
+                                    <div class="hamukasu-ui-detail">
+                                        Powered by <a href="https://hamukasu-api.apidocumentation.com/guide/nonstress-captcha" target="_blank">nonstress CAPTCHA</a>
                                     </div>
-                                    <div class="captcha-text">Verifying...</div>
-                                </div>
-                                <div class="captcha-detail">
-                                    Powered by <a href="https://hamukasu-api.apidocumentation.com/guide/nonstress-captcha" target="_blank" class="captcha-link">nonstress CAPTCHA</a>
                                 </div>
                             </div>
 
-                            <button type="submit" class="submit-button" disabled id="submit-en">
-                                Submit
-                            </button>
+                            <button type="submit" class="submit-button" disabled>Submit</button>
 
-                            <div class="status-message" id="status-en">
+                            <div class="form-status" id="formStatusEn">
                                 <svg class="status-icon icon" viewBox="0 0 24 24">
                                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                                 </svg>
@@ -765,209 +767,203 @@
                     </svg>
                 </a>
             </p>
-            <p class="oss-text" id="oss-text">
-                このページのソースコードは
-                <a href="https://github.com/yukisakuna/fk-mail-abuse" target="_blank" rel="noopener noreferrer" class="footer-link">
-                    <svg style="width: 12px; height: 12px; margin-right: 2px;" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
-                    </svg>
-                    GitHubで公開
-                </a>
-                されており、オープンソースソフトウェア (OSS) です。
-            </p>
+            <div class="oss-text" id="oss-text">
+                <div class="oss-info" lang="ja">
+                    <p>このページのソースコードは<a href="https://github.com/yukisakuna/fk-mail-abuse" target="_blank" rel="noopener noreferrer" class="footer-link">GitHubで公開</a>されており、オープンソースソフトウェア (OSS) です。</p>
+                </div>
+                <div class="oss-info" lang="en" style="display: none;">
+                    <p>The source code for this page is <a href="https://github.com/yukisakuna/fk-mail-abuse" target="_blank" rel="noopener noreferrer" class="footer-link">available on GitHub</a> and is Open Source Software (OSS).</p>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Language switching
+        // 元のJavaScript機能をそのまま保持
         const langJaButton = document.getElementById('lang-ja');
         const langEnButton = document.getElementById('lang-en');
-        const contentJa = document.getElementById('content-ja');
-        const contentEn = document.getElementById('content-en');
-        const mainTitle = document.getElementById('main-title');
-        const mainSubtitle = document.getElementById('main-subtitle');
-        const ossText = document.getElementById('oss-text');
+        const contentJa = document.querySelector('#content-ja');
+        const contentEn = document.querySelector('#content-en');
+        const ossInfoJa = document.querySelector('.oss-info[lang="ja"]');
+        const ossInfoEn = document.querySelector('.oss-info[lang="en"]');
+        const htmlTag = document.documentElement;
 
-        let currentLang = 'ja';
-
-        function switchToLang(lang) {
-            currentLang = lang;
-            
+        // Store original switchToLang function
+        const originalSwitchToLang = function(lang) {
             if (lang === 'ja') {
                 contentJa.classList.add('active');
                 contentEn.classList.remove('active');
+                ossInfoJa.style.display = 'block';
+                ossInfoEn.style.display = 'none';
                 langJaButton.classList.add('active');
                 langEnButton.classList.remove('active');
-                mainTitle.textContent = '公開メールサービスについて';
-                mainSubtitle.textContent = 'Public Email Service';
-                ossText.innerHTML = `このページのソースコードは
-                    <a href="https://github.com/yukisakuna/fk-mail-abuse" target="_blank" rel="noopener noreferrer" class="footer-link">
-                        <svg style="width: 12px; height: 12px; margin-right: 2px;" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
-                        </svg>
-                        GitHubで公開
-                    </a>
-                    されており、オープンソースソフトウェア (OSS) です。`;
-                document.documentElement.lang = 'ja';
-            } else {
+                htmlTag.lang = 'ja';
+                document.getElementById('main-title').textContent = '公開メールサービスについて';
+                document.getElementById('main-subtitle').textContent = 'Public Email Service';
+            } else if (lang === 'en') {
                 contentJa.classList.remove('active');
                 contentEn.classList.add('active');
+                ossInfoJa.style.display = 'none';
+                ossInfoEn.style.display = 'block';
                 langJaButton.classList.remove('active');
                 langEnButton.classList.add('active');
-                mainTitle.textContent = 'Public Email Service';
-                mainSubtitle.textContent = 'About This Service';
-                ossText.innerHTML = `The source code for this page is
-                    <a href="https://github.com/yukisakuna/fk-mail-abuse" target="_blank" rel="noopener noreferrer" class="footer-link">
-                        <svg style="width: 12px; height: 12px; margin-right: 2px;" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
-                        </svg>
-                        available on GitHub
-                    </a>
-                    and is Open Source Software (OSS).`;
-                document.documentElement.lang = 'en';
+                htmlTag.lang = 'en';
+                document.getElementById('main-title').textContent = 'Public Email Service';
+                document.getElementById('main-subtitle').textContent = 'About This Service';
             }
-            
-            updateCaptchaUI(currentCaptchaToken, lang);
-        }
+        };
+        
+        // Enhanced switchToLang for CAPTCHA UI update
+        window.switchToLang = function(lang) {
+            originalSwitchToLang(lang);
+            waitForNonstress(() => {
+                const token = nonstress.getToken();
+                updateCaptchaUI(token, lang);
+            });
+        };
 
         langJaButton.addEventListener('click', () => switchToLang('ja'));
         langEnButton.addEventListener('click', () => switchToLang('en'));
 
-        // Detect initial language
+        // Set initial language
         const userLang = navigator.language || navigator.userLanguage;
         if (userLang && userLang.toLowerCase().startsWith('en')) {
             switchToLang('en');
+        } else {
+            switchToLang('ja');
         }
 
-        // CAPTCHA simulation
-        let currentCaptchaToken = '';
+        // Hamukasu CAPTCHA UI Script & Form Submission - 元のコードを保持
+        let hamukasuCaptchaSetting = {};
 
-        function updateCaptchaUI(token, lang) {
-            const captchaJa = document.getElementById('captcha-ja');
-            const captchaEn = document.getElementById('captcha-en');
-            const submitJa = document.getElementById('submit-ja');
-            const submitEn = document.getElementById('submit-en');
-
-            const captcha = lang === 'ja' ? captchaJa : captchaEn;
-            const submit = lang === 'ja' ? submitJa : submitEn;
-            
-            const icon = captcha.querySelector('.captcha-icon');
-            const text = captcha.querySelector('.captcha-text');
-
-            if (token === 'Failed') {
-                icon.innerHTML = `<svg style="width: 24px; height: 24px; color: var(--error);" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
-                </svg>`;
-                text.textContent = lang === 'ja' ? '認証失敗!' : 'Failed!';
-                submit.disabled = true;
-            } else if (token === '') {
-                icon.innerHTML = '<div class="spinner"></div>';
-                text.textContent = lang === 'ja' ? '検証中...' : 'Verifying...';
-                submit.disabled = true;
-            } else {
-                icon.innerHTML = `<svg style="width: 24px; height: 24px; color: var(--success);" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
-                </svg>`;
-                text.textContent = lang === 'ja' ? '認証成功!' : 'Success!';
-                submit.disabled = false;
-            }
-        }
-
-        // Wait for nonstress CAPTCHA
         function waitForNonstress(callback) {
-            const interval = setInterval(() => {
-                if (typeof nonstress !== 'undefined' && typeof nonstress.getToken === 'function') {
-                    clearInterval(interval);
-                    callback();
-                }
-            }, 50);
+          const interval = setInterval(() => {
+            if (typeof nonstress !== "undefined" && typeof nonstress.getToken === "function") {
+              clearInterval(interval);
+              callback();
+            }
+          }, 50);
         }
 
-        // Initialize CAPTCHA
-        document.addEventListener('DOMContentLoaded', () => {
-            // Simulate CAPTCHA loading
-            setTimeout(() => {
-                currentCaptchaToken = 'mock-token-' + Date.now();
-                updateCaptchaUI(currentCaptchaToken, currentLang);
-            }, 2000);
+        function updateCaptchaUI(currentToken, lang) {
+            const currentContentSection = document.querySelector(`#content-${lang}`);
+            if (!currentContentSection) return;
 
-            // Form submission handlers
-            async function handleFormSubmit(event, lang) {
-                event.preventDefault();
-                const form = event.target;
-                const statusDiv = document.getElementById(`status-${lang}`);
-                const statusText = document.getElementById(`status-text-${lang}`);
-                const submitButton = document.getElementById(`submit-${lang}`);
+            const resultElem = currentContentSection.querySelector(".hamukasu-ui-result");
+            const imageElem = currentContentSection.querySelector(".hamukasu-ui-image");
+            const submitButton = currentContentSection.querySelector(`form button[type="submit"]`);
 
-                // Show loading state
-                statusDiv.classList.remove('show', 'success', 'error');
-                submitButton.disabled = true;
-                submitButton.innerHTML = `
-                    <div class="spinner"></div>
-                    ${lang === 'ja' ? '送信中...' : 'Submitting...'}
-                `;
+            if (!resultElem || !imageElem || !submitButton) return;
 
-                // Validate CAPTCHA
-                if (!currentCaptchaToken || currentCaptchaToken === 'Failed') {
-                    statusDiv.classList.add('show', 'error');
-                    statusDiv.querySelector('.status-icon').innerHTML = `
-                        <svg viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
-                        </svg>
-                    `;
-                    statusText.textContent = lang === 'ja' 
-                        ? 'CAPTCHA認証に失敗しました。ページを再読み込みして再度お試しください。'
-                        : 'CAPTCHA verification failed. Please refresh and try again.';
-                    
-                    submitButton.disabled = false;
-                    submitButton.textContent = lang === 'ja' ? '送信' : 'Submit';
-                    return;
-                }
+            const defaultImg = "/img/img_clear-hamutan.png";
+            const successImg = "/img/check-circle-fill.svg";
+            const failImg = "/img/x-circle-fill.svg";
 
-                try {
-                    // Simulate API call
-                    await new Promise(resolve => setTimeout(resolve, 2000));
+            if (currentToken === "Failed") {
+              resultElem.textContent = lang === 'ja' ? "認証失敗!" : "Failed!";
+              imageElem.setAttribute("src", failImg);
+              imageElem.classList.remove("success");
+              imageElem.classList.add("failed");
+              submitButton.disabled = true;
+            } else if (currentToken === "") {
+              resultElem.textContent = lang === 'ja' ? "検証中..." : "Verifying...";
+              imageElem.setAttribute("src", defaultImg);
+              imageElem.classList.remove("success", "failed");
+              submitButton.disabled = true;
+            } else {
+              resultElem.textContent = lang === 'ja' ? "認証成功!" : "Success!";
+              imageElem.setAttribute("src", successImg);
+              imageElem.classList.remove("failed");
+              imageElem.classList.add("success");
+              submitButton.disabled = false;
+            }
+        }
 
-                    // Success
-                    statusDiv.classList.add('show', 'success');
-                    statusDiv.querySelector('.status-icon').innerHTML = `
-                        <svg viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
-                        </svg>
-                    `;
-                    statusText.textContent = lang === 'ja'
-                        ? 'フォームが正常に送信されました。受付メールをご確認ください。'
-                        : 'Form submitted successfully. Please check your email for confirmation.';
+        document.addEventListener("DOMContentLoaded", () => {
+          waitForNonstress(() => {
+            let lastValue = nonstress.getToken();
+            updateCaptchaUI(lastValue, htmlTag.lang || 'ja');
 
-                    form.reset();
-                    
-                    // Reset CAPTCHA
-                    currentCaptchaToken = '';
-                    updateCaptchaUI(currentCaptchaToken, lang);
-                    setTimeout(() => {
-                        currentCaptchaToken = 'mock-token-' + Date.now();
-                        updateCaptchaUI(currentCaptchaToken, lang);
-                    }, 1000);
+            setInterval(() => {
+              const currentToken = nonstress.getToken();
+              if (currentToken !== lastValue) {
+                lastValue = currentToken;
+                updateCaptchaUI(currentToken, htmlTag.lang || 'ja');
+              }
+            }, 200);
+          });
 
-                } catch (error) {
-                    // Error
-                    statusDiv.classList.add('show', 'error');
-                    statusDiv.querySelector('.status-icon').innerHTML = `
-                        <svg viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
-                        </svg>
-                    `;
-                    statusText.textContent = lang === 'ja'
-                        ? '送信に失敗しました。再度お試しください。'
-                        : 'Submission failed. Please try again.';
-                } finally {
-                    submitButton.disabled = currentCaptchaToken === '' || currentCaptchaToken === 'Failed';
-                    submitButton.textContent = lang === 'ja' ? '送信' : 'Submit';
-                }
+          async function handleFormSubmit(event, langSuffix) {
+            event.preventDefault();
+            const form = event.target;
+            const statusDiv = document.getElementById(`formStatus${langSuffix}`);
+            const statusText = document.getElementById(`status-text-${langSuffix.toLowerCase()}`);
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            statusDiv.classList.remove('success', 'error');
+            statusDiv.classList.add('show');
+            statusText.textContent = langSuffix === 'Ja' ? '送信中...' : 'Submitting...';
+            submitButton.disabled = true;
+
+            const captchaToken = nonstress.getToken();
+            if (captchaToken === "" || captchaToken === "Failed") {
+              statusText.textContent = langSuffix === 'Ja' ? 'CAPTCHA認証に失敗しました。ページを再読み込みして再度お試しください。' : 'CAPTCHA verification failed. Please refresh and try again.';
+              statusDiv.classList.add('error');
+              submitButton.disabled = false;
+              return;
             }
 
-            document.getElementById('abuse-form-ja').addEventListener('submit', (e) => handleFormSubmit(e, 'ja'));
-            document.getElementById('abuse-form-en').addEventListener('submit', (e) => handleFormSubmit(e, 'en'));
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            data.captchaToken = captchaToken;
+            data.lang = langSuffix === 'Ja' ? 'ja' : 'en';
+
+            try {
+              const response = await fetch('https://paicha-abuse-worker.nyaacha.workers.dev/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+              });
+
+              const result = await response.json();
+
+              if (response.ok && result.success) {
+                statusText.textContent = langSuffix === 'Ja' ? 'フォームが正常に送信されました。受付メールをご確認ください。' : 'Form submitted successfully. Please check your email for confirmation.';
+                statusDiv.classList.add('success');
+                form.reset();
+                waitForNonstress(() => {
+                    updateCaptchaUI(nonstress.getToken(), data.lang);
+                });
+
+              } else {
+                statusText.textContent = (langSuffix === 'Ja' ? '送信に失敗しました: ' : 'Submission failed: ') + (result.error || 'Unknown error. Please try again.');
+                statusDiv.classList.add('error');
+              }
+            } catch (error) {
+              console.error('Error submitting form:', error);
+              statusText.textContent = langSuffix === 'Ja' ? '送信中に予期せぬエラーが発生しました。' : 'An unexpected error occurred during submission.';
+              statusDiv.classList.add('error');
+            } finally {
+                waitForNonstress(() => {
+                    const currentToken = nonstress.getToken();
+                    if (currentToken && currentToken !== "Failed") {
+                         submitButton.disabled = false;
+                    } else {
+                        submitButton.disabled = true;
+                    }
+                    if (statusDiv.classList.contains('success')) {
+                        submitButton.disabled = true;
+                        updateCaptchaUI("", data.lang);
+                    }
+                });
+            }
+          }
+
+          const formJa = document.getElementById('abuseFormJa');
+          const formEn = document.getElementById('abuseFormEn');
+
+          if (formJa) formJa.addEventListener('submit', (e) => handleFormSubmit(e, 'Ja'));
+          if (formEn) formEn.addEventListener('submit', (e) => handleFormSubmit(e, 'En'));
         });
     </script>
 </body>
